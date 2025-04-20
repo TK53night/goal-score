@@ -11,7 +11,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background: linear-gradient(135deg, #a855f7, #3b82f6); /* 背景 */
+      background: linear-gradient(135deg, #a855f7, #3b82f6);
       font-family: 'Helvetica Neue', sans-serif;
     }
 
@@ -25,13 +25,13 @@
       transform: rotate(-90deg);
     }
 
-    .score-ring {
+    .base-ring {
       fill: none;
-      stroke: #e5e7eb;
+      stroke: rgba(0,0,0,0); /* 外円の背景：透明に */
       stroke-width: 20;
     }
 
-    .score-ring-progress {
+    .progress-ring {
       fill: none;
       stroke: url(#gradient);
       stroke-width: 20;
@@ -61,33 +61,4 @@
 </head>
 <body>
   <div class="donut-wrapper">
-    <svg width="200" height="200">
-      <defs>
-        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#a855f7"/>
-          <stop offset="100%" stop-color="#3b82f6"/>
-        </linearGradient>
-      </defs>
-      <circle class="score-ring" cx="100" cy="100" r="90"/>
-      <circle class="score-ring-progress" cx="100" cy="100" r="90"/>
-    </svg>
-    <div class="score-text">
-      Score
-      <span id="score-value">0</span>
-    </div>
-  </div>
-
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const score = parseInt(params.get('score')) || 0;
-    const max = parseInt(params.get('max')) || 200;
-
-    const percentage = Math.min(score / max, 1);
-    const circumference = 2 * Math.PI * 90; // r = 90
-    const offset = circumference * (1 - percentage);
-
-    document.getElementById("score-value").innerText = score;
-    document.querySelector(".score-ring-progress").style.strokeDashoffset = offset;
-  </script>
-</body>
-</html>
+    <svg
