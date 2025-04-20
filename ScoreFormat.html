@@ -1,29 +1,73 @@
-<html>
-  <head>
-    <style>
-      .circle {
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
-        background: conic-gradient(#7b5eff 75%, #ccc 0%);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 28px;
-        font-weight: bold;
-        color: white;
-      }
-      body {
-        background: #0e0f1d;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="circle">120</div>
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GrowMe Score</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #a855f7, #3b82f6);
+      font-family: 'Helvetica Neue', sans-serif;
+    }
+
+    .score-container {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: conic-gradient(#a855f7 calc(var(--score) * 1%), #e5e7eb 0%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+      position: relative;
+    }
+
+    .score-container::before {
+      content: '';
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      background: #1e1e2f;
+      border-radius: 50%;
+      z-index: 0;
+    }
+
+    .score-value {
+      color: white;
+      font-size: 32px;
+      font-weight: bold;
+      z-index: 1;
+      text-align: center;
+    }
+
+    .label {
+      font-size: 14px;
+      color: #cbd5e1;
+      margin-top: 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="score-container" style="--score: 60;">
+    <div class="score-value" id="score-text">120</div>
+  </div>
+</body>
+
+<script>
+  // パラメータからスコアと割合を取得
+  const params = new URLSearchParams(window.location.search);
+  const score = parseInt(params.get('score')) || 0;
+  const max = parseInt(params.get('max')) || 200;
+  const percent = Math.min((score / max) * 100, 100);
+
+  // 表示を更新
+  document.getElementById("score-text").innerText = score;
+  document.querySelector(".score-container").style.setProperty('--score', percent);
+</script>
 </html>
